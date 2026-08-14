@@ -1,3 +1,5 @@
+[![Saddouri20's animated GitSkins profile](https://www.gitskins.com/api/section/hero?username=Saddouri20&theme=matrix&style=aura)](https://www.gitskins.com/showcase/Saddouri20?skin=cyber)
+
 <div align="center">
 <img src="./ascii.svg" width="460" alt="Saddouri20 in ASCII"/>
 <img src="./stats.svg" width="620" alt="Saddouri20 contributions in the last year"/>
