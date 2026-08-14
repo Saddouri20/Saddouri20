@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Convert a square GitHub avatar into a self-typing ASCII SVG portrait."""
 from pathlib import Path
+import io
 import html
 import sys
 
 import numpy as np
 from PIL import Image, ImageEnhance, ImageOps
+from rembg import remove
+
 
 RAMP = " .`:-=+*cs#%@"
 COLS = 90
@@ -20,8 +23,19 @@ FG_LIGHT = "#6e7681"
 FG_DARK = "#c9d1d9"
 
 
+def remove_background(image: Image.Image) -> Image.Image:
+    """Cut out the person and place them on white for a clean ASCII portrait."""
+    source = io.BytesIO()
+    image.save(source, format="PNG")
+    cutout = remove(source.getvalue())
+    foreground = Image.open(io.BytesIO(cutout)).convert("RGBA")
+    white = Image.new("RGBA", foreground.size, (255, 255, 255, 255))
+    white.alpha_composite(foreground)
+    return white.convert("RGB")
+
+
 def lines_from_image(path: Path) -> list[str]:
-    image = Image.open(path).convert("RGB")
+    image = remove_background(Image.open(path).convert("RGB"))
     gray = ImageOps.grayscale(image)
     gray = ImageOps.autocontrast(gray, cutoff=1)
     gray = ImageEnhance.Contrast(gray).enhance(1.25)

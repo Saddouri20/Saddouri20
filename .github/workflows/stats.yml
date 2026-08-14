@@ -20,11 +20,11 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.x"
       - name: Install portrait dependencies
-        run: python3 -m pip install --disable-pip-version-check --no-input Pillow numpy
+        run: python3 -m pip install --disable-pip-version-check --no-input Pillow numpy rembg onnxruntime
       - name: Sync the current GitHub avatar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
